@@ -1,7 +1,7 @@
 const grpc = require("@grpc/grpc-js");
 var protoLoader = require("@grpc/proto-loader");
-const PROTO_PATH = "./news.proto";
-
+const newsProtoPath = './news.proto';
+const bookStoreProtoPath = './bookStore.proto';
 const options = {
   keepCase: true,
   longs: String,
@@ -10,13 +10,20 @@ const options = {
   oneofs: true,
 };
 
-var packageDefinition = protoLoader.loadSync(PROTO_PATH, options);
+var newsPackageDefinition = protoLoader.loadSync(newsProtoPath, options);
+var bookStorePackageDefinition = protoLoader.loadSync(bookStoreProtoPath, options);
 
-const NewsService = grpc.loadPackageDefinition(packageDefinition).NewsService;
+const NewsService = grpc.loadPackageDefinition(newsPackageDefinition).NewsService;
+const BookStoreService = grpc.loadPackageDefinition(bookStorePackageDefinition).Book;
 
-const client = new NewsService(
+const newsClient = new NewsService(
   "localhost:50051",
   grpc.credentials.createInsecure()
 );
 
-module.exports = client;
+const bookStoreClient = new BookStoreService(
+  "localhost:50052",
+  grpc.credentials.createInsecure()
+);
+
+module.exports = {newsClient, bookStoreClient};

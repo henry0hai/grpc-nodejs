@@ -1,14 +1,14 @@
 // test.js
 // get all news
-const client = require("./client");
+const {newsClient, bookStoreClient} = require("./client");
 
-client.getAllNews({}, (error, news) => {
-  if (!error) throw error;
-  console.log(news);
+newsClient.getAllNews({}, (error, news) => {
+  if (error) throw error;
+  console.log("Original news: ", news);
 });
 
 // add a news
-client.addNews(
+newsClient.addNews(
   {
     title: "Title news 3",
     body: "Body content 3",
@@ -21,7 +21,7 @@ client.addNews(
 );
 
 // edit a news
-client.editNews(
+newsClient.editNews(
   {
     id: 2,
     body: "Body content 2 edited.",
@@ -35,7 +35,7 @@ client.editNews(
 );
 
 // delete a news
-client.deleteNews(
+newsClient.deleteNews(
   {
     id: 2,
   },
@@ -44,3 +44,33 @@ client.deleteNews(
     console.log("Successfully deleted a news item.");
   }
 );
+
+newsClient.getAllNews({}, (error, news) => {
+  if (error) throw error;
+  console.log("Final news: ", news);
+});
+
+
+bookStoreClient.createBook({ 'id': -1, 'book': 'Cracking the Interview' }, (err, response) => {
+	if (err) {
+		console.log(err);
+	} else {
+		console.log(`From server`, JSON.stringify(response));
+	}
+});
+
+bookStoreClient.readBook({ 'id': 1 }, (err, response) => {
+	if (err) {
+		console.log(err);
+	} else {
+		console.log(`From server`, JSON.stringify(response));
+	}
+});
+
+bookStoreClient.readBooks(null, (err, response) => {
+	if (err) {
+		console.log(err);
+	} else {
+		console.log(`From server`, JSON.stringify(response));
+	}
+});
