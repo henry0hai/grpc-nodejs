@@ -28,3 +28,13 @@ Second terminal
 ```bash
 node test
 ```
+
+## Incase you want to run streaming data demo
+
+```bash
+yarn serve
+```
+
+- Using postman to import the demo REST API call from file: `[localhost] -- sample_postman_call.json`
+- Using `POST API` to create several orders
+- Using `GET API` to get one of the order to see the `status change` or watch the `console output`
